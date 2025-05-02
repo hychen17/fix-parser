@@ -1,6 +1,7 @@
 package com.fix.decoder;
 
 import com.fix.constant.Constants;
+import com.fix.exception.InvalidTagException;
 
 import java.nio.ByteBuffer;
 
@@ -9,7 +10,7 @@ import static com.fix.constant.Constants.START_OF_HEADER;
 
 public class TrailerDecoder implements Decoder {
 
-    /* CheckSum = 10 */
+    // CheckSum = 10
     private boolean hasChecksum;
     private char[] checkSum = new char[3];
     private int checkSumOffset;
@@ -41,10 +42,11 @@ public class TrailerDecoder implements Decoder {
         }
     }
 
-    public int decode(final byte[] fixMessageBytes) {
+    public int decode(final byte[] fixMessageBytes,
+                      final int startOffset) throws InvalidTagException {
 
         int end = fixMessageBytes.length;
-        int tagPosition = 0;
+        int tagPosition = startOffset;
         int positionIter = tagPosition;
         int tag;
 
@@ -65,18 +67,13 @@ public class TrailerDecoder implements Decoder {
                     break;
 
                 default:
-
+                    throw new InvalidTagException("Invalid tag in trailer: " + tag);
 
             }
 
             tagPosition = endOfField + 1;
         }
         return end;
-    }
-
-    @Override
-    public int decode(ByteBuffer buffer, int offset, int length) {
-        return 0;
     }
 
     @Override

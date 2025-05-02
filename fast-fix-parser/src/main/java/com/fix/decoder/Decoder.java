@@ -1,9 +1,11 @@
 package com.fix.decoder;
 
+import com.fix.exception.InvalidTagException;
+
 import java.nio.ByteBuffer;
 
 public interface Decoder {
-    int decode(ByteBuffer buffer, int offset, int length);
+    int decode(byte[] messageBytes, int offset) throws InvalidTagException;
 
     void reset();
 }
