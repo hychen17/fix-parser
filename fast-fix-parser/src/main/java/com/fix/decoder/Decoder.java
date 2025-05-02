@@ -8,4 +8,6 @@ public interface Decoder {
     int decode(byte[] messageBytes, int offset) throws InvalidTagException;
 
     void reset();
+
+    StringBuilder stringAppender();
 }
