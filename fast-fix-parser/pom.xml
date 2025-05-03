@@ -3,15 +3,15 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.gf.fix</groupId>
-        <artifactId>fix-app</artifactId>
+        <groupId>com.fix</groupId>
+        <artifactId>fix-parser</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>artio-fix-engine</artifactId>
+    <artifactId>fast-fix-parser</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>Artio FIX Engine</name>
-    <description>FIX Engine implemented using Artio</description>
+    <name>Faster FIX Parser</name>
+    <description>Fast Fix Parser</description>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>

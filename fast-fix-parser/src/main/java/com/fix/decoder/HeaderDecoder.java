@@ -198,46 +198,46 @@ public class HeaderDecoder implements Decoder {
             final int equalsPosition = scan(fixMessageBytes, tagPosition, end, EQUAL_SIGN);
             tag = getInt(fixMessageBytes, tagPosition, equalsPosition);
             final int valueOffset = equalsPosition + 1;
-            final int endOfField = scan(fixMessageBytes, valueOffset, end, START_OF_HEADER);
-            final int valueLength = endOfField - valueOffset;
+            final int endOfValue = scan(fixMessageBytes, valueOffset, end, START_OF_HEADER);
+            final int valueLength = endOfValue - valueOffset;
 
             switch (tag) {
                 case Constants.BEGIN_STRING:
-                    beginString = getChars(fixMessageBytes, beginString, valueOffset, valueLength);
+                    beginString = getChars(fixMessageBytes, beginString, valueOffset, endOfValue);
                     beginStringLength = valueLength;
                     hasBeginString = true;
                     break;
 
                 case Constants.BODY_LENGTH:
-                    bodyLength = getInt(fixMessageBytes, valueOffset, endOfField);
+                    bodyLength = getInt(fixMessageBytes, valueOffset, endOfValue);
                     hasBodyLength = true;
                     break;
 
                 case Constants.MSG_TYPE:
-                    msgType = getChars(fixMessageBytes, msgType, valueOffset, valueLength);
+                    msgType = getChars(fixMessageBytes, msgType, valueOffset, endOfValue);
                     msgTypeLength = valueLength;
                     hasMsgType = true;
                     break;
 
                 case Constants.SENDER_COMP_ID:
-                    senderCompID = getChars(fixMessageBytes, senderCompID, valueOffset, valueLength);
+                    senderCompID = getChars(fixMessageBytes, senderCompID, valueOffset, endOfValue);
                     senderCompIDLength = valueLength;
                     hasSenderCompID = true;
                     break;
 
                 case Constants.TARGET_COMP_ID:
-                    targetCompID = getChars(fixMessageBytes, targetCompID, valueOffset, valueLength);
+                    targetCompID = getChars(fixMessageBytes, targetCompID, valueOffset, endOfValue);
                     targetCompIDLength = valueLength;
                     hasTargetCompID = true;
                     break;
 
                 case Constants.MSG_SEQ_NUM:
-                    msgSeqNum = getInt(fixMessageBytes, valueOffset, endOfField);
+                    msgSeqNum = getInt(fixMessageBytes, valueOffset, endOfValue);
                     hasMsgSeqNum = true;
                     break;
 
                 case Constants.SENDING_TIME:
-                    sendingTime = getChars(fixMessageBytes, sendingTime, valueOffset, valueLength);
+                    sendingTime = getChars(fixMessageBytes, sendingTime, valueOffset, endOfValue);
                     sendingTimeLength = valueLength;
                     hasSendingTime = true;
                     break;
@@ -249,7 +249,7 @@ public class HeaderDecoder implements Decoder {
 
             }
 
-            tagPosition = endOfField + 1;
+            tagPosition = endOfValue + 1;
         }
         return tagPosition;
     }

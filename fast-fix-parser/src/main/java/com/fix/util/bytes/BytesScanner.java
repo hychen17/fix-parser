@@ -19,6 +19,10 @@ public class BytesScanner {
         return result;
     }
 
+    public static char getChar(byte[] array, int startInclusive) {
+        return (char) array[startInclusive];
+    }
+
     public static char[] getChars(byte[] array, char[] oldTargetToCopy, int startInclusive, int endExclusive) {
         int length = endExclusive - startInclusive;
         char[] targetToCopy = oldTargetToCopy.length < length ? new char[length] : oldTargetToCopy;

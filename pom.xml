@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.fix</groupId>
-    <artifactId>fast-fix-parser</artifactId>
+    <artifactId>fix-parser</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Fix Parser</name>

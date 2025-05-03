@@ -11,8 +11,9 @@ public class FixParserApi {
         newOrderSingleDecoder.decode(fixMessage);
     }
 
-    public String parseNewOrderSingle(byte[] fixMessage) {
+    public String parseNewOrderSingle(byte[] fixMessage) throws InvalidTagException {
         NewOrderSingleDecoder newOrderSingleDecoder = new NewOrderSingleDecoder();
+        newOrderSingleDecoder.decode(fixMessage);
         return newOrderSingleDecoder.stringAppender().toString();
 
     }

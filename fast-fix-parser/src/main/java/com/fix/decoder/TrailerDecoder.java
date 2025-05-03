@@ -49,12 +49,13 @@ public class TrailerDecoder implements Decoder {
             final int equalsPosition = scan(fixMessageBytes, tagPosition, end, EQUAL_SIGN);
             tag = getInt(fixMessageBytes, tagPosition, equalsPosition);
             final int valueOffset = equalsPosition + 1;
-            final int endOfField = scan(fixMessageBytes, valueOffset, end, START_OF_HEADER);
-            final int valueLength = endOfField - valueOffset;
+            final int endOfValue = scan(fixMessageBytes, valueOffset, end, START_OF_HEADER);
+            final int valueLength = endOfValue - valueOffset;
 
             switch (tag) {
                 case Constants.CHECK_SUM:
-                    checkSum = getChars(fixMessageBytes, checkSum, valueOffset, valueLength);
+                    checkSum = getChars(fixMessageBytes, checkSum, valueOffset, endOfValue);
+                    hasChecksum = true;
                     checkSumLength = valueLength;
                     break;
 
@@ -62,7 +63,7 @@ public class TrailerDecoder implements Decoder {
                     throw new InvalidTagException("Invalid tag: " + tag + " at position: " + tagPosition);
             }
 
-            tagPosition = endOfField + 1;
+            tagPosition = endOfValue + 1;
         }
         return tagPosition;
     }
@@ -75,7 +76,7 @@ public class TrailerDecoder implements Decoder {
     @Override
     public StringBuilder stringAppender() {
         StringBuilder sb = new StringBuilder();
-        if (hasChecksum) {
+        if (hasChecksum()) {
             sb.append(CHECK_SUM + "=").append(checkSum).append((char) START_OF_HEADER);
         }
         return sb;

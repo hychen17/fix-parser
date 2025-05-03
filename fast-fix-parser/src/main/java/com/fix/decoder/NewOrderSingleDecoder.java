@@ -13,6 +13,14 @@ public class NewOrderSingleDecoder implements Decoder{
 
     private final TrailerDecoder trailerDecoder = new TrailerDecoder();
 
+    public HeaderDecoder getHeader() {
+        return headerDecoder;
+    }
+
+    public TrailerDecoder getTrailer() {
+        return trailerDecoder;
+    }
+
     /* ClOrdID = 11 */
     private boolean hasClOrdID;
     private char[] clOrdID = new char[1];
@@ -52,6 +60,10 @@ public class NewOrderSingleDecoder implements Decoder{
 
     public char handlInst() {
         return handlInst;
+    }
+
+    public String handlInstAsString() {
+        return String.valueOf(handlInst);
     }
 
     public void resetHandlInst() {
@@ -105,6 +117,10 @@ public class NewOrderSingleDecoder implements Decoder{
         side = (char) 0;
     }
 
+    public String sideAsString() {
+        return String.valueOf(side);
+    }
+
     /* TransactTime = 60 */
     private boolean hasTransactTime;
     private char[] transactTime = new char[27];
@@ -149,6 +165,10 @@ public class NewOrderSingleDecoder implements Decoder{
     public void resetOrdType() {
         hasOrdType = false;
         ordType = (char) 0;
+    }
+
+    public String ordTypeAsString() {
+        return String.valueOf(ordType);
     }
 
     /* Price = 44 */
@@ -222,43 +242,43 @@ public class NewOrderSingleDecoder implements Decoder{
             final int equalsPosition = scan(fixMessageBytes, tagPosition, end, EQUAL_SIGN);
             tag = getInt(fixMessageBytes, tagPosition, equalsPosition);
             final int valueOffset = equalsPosition + 1;
-            final int endOfField = scan(fixMessageBytes, valueOffset, end, START_OF_HEADER);
-            final int valueLength = endOfField - valueOffset;
+            final int endOfValue = scan(fixMessageBytes, valueOffset, end, START_OF_HEADER);
+            final int valueLength = endOfValue - valueOffset;
 
             switch (tag) {
                 case Constants.CL_ORD_ID:
-                    clOrdID = getChars(fixMessageBytes, clOrdID, valueOffset, valueLength);
+                    clOrdID = getChars(fixMessageBytes, clOrdID, valueOffset, endOfValue);
                     hasClOrdID = true;
                     clOrdIDLength = valueLength;
                     break;
                 case Constants.HANDL_INST:
-                    handlInst = (char) getInt(fixMessageBytes, valueOffset, endOfField);
+                    handlInst = getChar(fixMessageBytes, valueOffset);
                     hasHandlInst = true;
                     break;
                 case Constants.SYMBOL:
-                    symbol = getChars(fixMessageBytes, symbol, valueOffset, valueLength);
+                    symbol = getChars(fixMessageBytes, symbol, valueOffset, endOfValue);
                     hasSymbol = true;
                     symbolLength = valueLength;
                     break;
                 case Constants.SIDE:
-                    side = (char) getInt(fixMessageBytes, valueOffset, endOfField);
+                    side = getChar(fixMessageBytes, valueOffset);
                     hasSide = true;
                     break;
                 case Constants.TRANSACT_TIME:
-                    transactTime = getChars(fixMessageBytes, transactTime, valueOffset, valueLength);
+                    transactTime = getChars(fixMessageBytes, transactTime, valueOffset, endOfValue);
                     hasTransactTime = true;
                     transactTimeLength = valueLength;
                     break;
                 case Constants.ORD_TYPE:
-                    ordType = (char) getInt(fixMessageBytes, valueOffset, endOfField);
+                    ordType = getChar(fixMessageBytes, valueOffset);
                     hasOrdType = true;
                     break;
                 case Constants.PRICE:
-                    price.fromString(getString(fixMessageBytes, valueOffset, endOfField));
+                    price.fromString(getString(fixMessageBytes, valueOffset, endOfValue));
                     hasPrice = true;
                     break;
                 case Constants.ORDER_QTY:
-                    orderQty.fromString(getString(fixMessageBytes, valueOffset, endOfField));
+                    orderQty.fromString(getString(fixMessageBytes, valueOffset, endOfValue));
                     hasOrderQty = true;
                     break;
 
@@ -267,7 +287,7 @@ public class NewOrderSingleDecoder implements Decoder{
                     // TODO: handle unknown tag
                     return tagPosition;
             }
-            tagPosition = endOfField + 1;
+            tagPosition = endOfValue + 1;
         }
 
         return tagPosition;
@@ -277,29 +297,29 @@ public class NewOrderSingleDecoder implements Decoder{
     public StringBuilder stringAppender() {
         StringBuilder sb = new StringBuilder();
         sb.append(headerDecoder.stringAppender());
-        if (hasClOrdID) {
+        if (hasClOrdID()) {
             sb.append(CL_ORD_ID + "=").append(clOrdIDAsString()).append((char) START_OF_HEADER);
         }
-        if (hasHandlInst) {
+        if (hasHandlInst()) {
             sb.append(HANDL_INST + "=").append(handlInst).append((char) START_OF_HEADER);
         }
-        if (hasSymbol) {
+        if (hasSymbol()) {
             sb.append(SYMBOL + "=").append(symbolAsString()).append((char) START_OF_HEADER);
         }
-        if (hasSide) {
+        if (hasSide()) {
             sb.append(SIDE + "=").append(side).append((char) START_OF_HEADER);
         }
-        if (hasTransactTime) {
+        if (hasTransactTime()) {
             sb.append(TRANSACT_TIME + "=").append(transactTimeAsString()).append((char) START_OF_HEADER);
         }
-        if (hasOrdType) {
-            sb.append(ORD_TYPE + "=").append(ordType).append((char) START_OF_HEADER);
+        if (hasOrdType()) {
+            sb.append(ORD_TYPE + "=").append(ordType()).append((char) START_OF_HEADER);
         }
-        if (hasPrice) {
-            sb.append(PRICE + "=").append(price).append((char) START_OF_HEADER);
+        if (hasPrice()) {
+            sb.append(PRICE + "=").append(price().toString()).append((char) START_OF_HEADER);
         }
-        if (hasOrderQty) {
-            sb.append(ORDER_QTY + "=").append(orderQty).append((char) START_OF_HEADER);
+        if (hasOrderQty()) {
+            sb.append(ORDER_QTY + "=").append(orderQty().toString()).append((char) START_OF_HEADER);
         }
         sb.append(trailerDecoder.stringAppender());
         return sb;
