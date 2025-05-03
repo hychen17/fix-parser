@@ -77,7 +77,7 @@ public class TrailerDecoder implements Decoder {
     public StringBuilder stringAppender() {
         StringBuilder sb = new StringBuilder();
         if (hasChecksum()) {
-            sb.append(CHECK_SUM + "=").append(checkSum).append((char) START_OF_HEADER);
+            sb.append(CHECK_SUM + "=").append(checkSum()).append((char) START_OF_HEADER);
         }
         return sb;
     }

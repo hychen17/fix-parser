@@ -1,7 +1,6 @@
 package com.fix.decoder;
 
 import com.fix.constant.Constants;
-import com.fix.exception.InvalidTagException;
 
 import static com.fix.constant.Constants.*;
 import static com.fix.util.bytes.BytesScanner.*;
@@ -268,11 +267,11 @@ public class HeaderDecoder implements Decoder {
     @Override
     public StringBuilder stringAppender() {
         StringBuilder sb = new StringBuilder();
-        if (hasBeginString) {
-            sb.append(BEGIN_STRING + "=").append(beginStringAsString()).append((char) START_OF_HEADER);
+        if (hasBeginString()) {
+            sb.append(BEGIN_STRING + "=").append(beginString()).append((char) START_OF_HEADER);
         }
-        if (hasBodyLength) {
-            sb.append(BODY_LENGTH + "=").append(bodyLength).append((char) START_OF_HEADER);
+        if (hasBodyLength()) {
+            sb.append(BODY_LENGTH + "=").append(bodyLength()).append((char) START_OF_HEADER);
         }
         if (hasMsgType) {
             sb.append(MSG_TYPE + "=").append(msgTypeAsString()).append((char) START_OF_HEADER);
@@ -284,7 +283,7 @@ public class HeaderDecoder implements Decoder {
             sb.append(TARGET_COMP_ID + "=").append(targetCompIDAsString()).append((char) START_OF_HEADER);
         }
         if (hasMsgSeqNum) {
-            sb.append(MSG_SEQ_NUM + "=").append(msgSeqNum).append((char) START_OF_HEADER);
+            sb.append(MSG_SEQ_NUM + "=").append(msgSeqNum()).append((char) START_OF_HEADER);
         }
         if (hasSendingTime) {
             sb.append(SENDING_TIME + "=").append(sendingTimeAsString()).append((char) START_OF_HEADER);

@@ -301,13 +301,13 @@ public class NewOrderSingleDecoder implements Decoder{
             sb.append(CL_ORD_ID + "=").append(clOrdIDAsString()).append((char) START_OF_HEADER);
         }
         if (hasHandlInst()) {
-            sb.append(HANDL_INST + "=").append(handlInst).append((char) START_OF_HEADER);
+            sb.append(HANDL_INST + "=").append(handlInst()).append((char) START_OF_HEADER);
         }
         if (hasSymbol()) {
             sb.append(SYMBOL + "=").append(symbolAsString()).append((char) START_OF_HEADER);
         }
         if (hasSide()) {
-            sb.append(SIDE + "=").append(side).append((char) START_OF_HEADER);
+            sb.append(SIDE + "=").append(side()).append((char) START_OF_HEADER);
         }
         if (hasTransactTime()) {
             sb.append(TRANSACT_TIME + "=").append(transactTimeAsString()).append((char) START_OF_HEADER);
