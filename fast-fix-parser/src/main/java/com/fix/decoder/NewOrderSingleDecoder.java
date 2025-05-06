@@ -9,8 +9,10 @@ import static com.fix.util.bytes.BytesScanner.*;
 
 /**
  * Only include all the mandatory fields in this example,
- * and "Price", "OrderQty" to illustrate the representation of float number.
- * Other non-mandatory fields should follow the same paradigm and created automatically by a code-gen template.
+ * and also include "Price", "OrderQty" to illustrate the representation of float number.
+ *
+ * The non-mandatory fields MUST be added if used in production.
+ * And should be added following the same paradigm and created automatically by a code-gen template.
  *
  * @author Tom Haoyuan Chen
  */
