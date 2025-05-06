@@ -8,7 +8,8 @@ README
     2) the User can pass in a FIX message byte array as the first parameter, and obtain a human-readable string of the FIX message.
 
 3. com.fix.decoder.* includes the core logic of decoding the FIX message.
-    For illustrating purpose, only NewOrderSingleDecoder is implemented here as an example.
+    For illustrating purpose, only NewOrderSingleDecoder is implemented here as an example. For now, it can only parse a message containing the mandatory tags in header, trailer and the message body (can contain tag "Price" and "OrderQty")
+    All the available tags of a message header, trailer and the NewOrderSingle body MUST be added if it's for production-use.
     Parser for other types of FIX message will be following the same paradigm.
 
 4. com.fix.util.bytes and com.fix.util.math is referenced from a side-project developed by @Tom Haoyuan Chen. The implementation is aimed at providing a solution for arithmetic calculation focusing on zero-gc and decimal-place precision, serving as an alternative of BigDecimal.
