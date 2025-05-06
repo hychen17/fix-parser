@@ -7,6 +7,12 @@ import com.fix.util.math.MutableDecimalFloat;
 import static com.fix.constant.Constants.*;
 import static com.fix.util.bytes.BytesScanner.*;
 
+/**
+ * Only include the mandatory fields in this example.
+ * The non-mandatory fields should follow the same paradigm and created automatically by a code-gen template.
+ *
+ * @author Tom Haoyuan Chen
+ */
 public class NewOrderSingleDecoder implements Decoder{
 
     private final HeaderDecoder headerDecoder = new HeaderDecoder();

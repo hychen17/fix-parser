@@ -1,0 +1,7 @@
+README
+
+1. com.fix.parser.FixParser is the API for parsing different types of FIX message.
+
+2. For illustrating purpose, only NewOrderSingle is included here as an example.  Parser for other types of FIX message will be following the same paradigm.
+
+3. com.fix.util.bytes and com.fix.util.math is referenced from a side-project developed by @Tom Haoyuan Chen. The implementation is aimed at providing a solution for arithmetic calculation focusing on zero-gc and decimal-place precision.
