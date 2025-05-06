@@ -11,7 +11,7 @@ README
     For illustrating purpose, only NewOrderSingleDecoder is implemented here as an example.
     Parser for other types of FIX message will be following the same paradigm.
 
-4. com.fix.util.bytes and com.fix.util.math is referenced from a side-project developed by @Tom Haoyuan Chen. The implementation is aimed at providing a solution for arithmetic calculation focusing on zero-gc and decimal-place precision.
+4. com.fix.util.bytes and com.fix.util.math is referenced from a side-project developed by @Tom Haoyuan Chen. The implementation is aimed at providing a solution for arithmetic calculation focusing on zero-gc and decimal-place precision, serving as an alternative of BigDecimal.
 
 Benchmarks (as shown in com.fix.parser.FixParserTest)
 
