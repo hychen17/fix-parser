@@ -7,7 +7,7 @@ import static com.fix.constant.Constants.*;
 import static com.fix.util.bytes.BytesScanner.*;
 
 /**
- * Only include the mandatory fields in this example.
+ * Only include the mandatory fields of the message trailer in this example.
  * The non-mandatory fields should follow the same paradigm and created automatically by a code-gen template.
  *
  * @author Tom Haoyuan Chen

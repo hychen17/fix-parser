@@ -8,8 +8,9 @@ import static com.fix.constant.Constants.*;
 import static com.fix.util.bytes.BytesScanner.*;
 
 /**
- * Only include the mandatory fields in this example.
- * The non-mandatory fields should follow the same paradigm and created automatically by a code-gen template.
+ * Only include all the mandatory fields in this example,
+ * and "Price", "OrderQty" to illustrate the representation of float number.
+ * Other non-mandatory fields should follow the same paradigm and created automatically by a code-gen template.
  *
  * @author Tom Haoyuan Chen
  */
@@ -280,11 +281,11 @@ public class NewOrderSingleDecoder implements Decoder{
                     hasOrdType = true;
                     break;
                 case Constants.PRICE:
-                    price.fromString(getString(fixMessageBytes, valueOffset, endOfValue));
+                    getDecimalFloat(fixMessageBytes, price, valueOffset, endOfValue);
                     hasPrice = true;
                     break;
                 case Constants.ORDER_QTY:
-                    orderQty.fromString(getString(fixMessageBytes, valueOffset, endOfValue));
+                    getDecimalFloat(fixMessageBytes, orderQty, valueOffset, endOfValue);
                     hasOrderQty = true;
                     break;
 
