@@ -118,26 +118,4 @@ class FixParserTest {
             System.out.printf("The %.5f percentile is: %d ns%n", percentile, timeElapsed[index]);
         }
     }
-
-    @Test
-    public void benchmark_the_memory_allocation_of_parsing_1_000_000_newOrderSingle() throws InvalidTagException {
-        for (int i = 0; i < 1_000_000; i++) {
-            fixParser.parseNewOrderSingle(ORIGNAL_FIX_MESSAGE_BYTES, decoder);
-        }
-    }
-
-    @Test
-    public void benchmark_the_memory_allocation_of_parsing_5_000_000_newOrderSingle() throws InvalidTagException {
-        for (int i = 0; i < 5_000_000; i++) {
-            fixParser.parseNewOrderSingle(ORIGNAL_FIX_MESSAGE_BYTES, decoder);
-        }
-    }
-
-    @Test
-    public void benchmark_the_memory_allocation_of_parsing_20_000_000_newOrderSingle() throws InvalidTagException {
-        for (int i = 0; i < 20_000_000; i++) {
-            fixParser.parseNewOrderSingle(ORIGNAL_FIX_MESSAGE_BYTES, decoder);
-        }
-    }
-
 }
