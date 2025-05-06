@@ -2,6 +2,38 @@ README
 
 1. com.fix.parser.FixParser is the API for parsing different types of FIX message.
 
-2. For illustrating purpose, only NewOrderSingle is included here as an example.  Parser for other types of FIX message will be following the same paradigm.
+2. com.fix.parser.FixParserTest illustrates how to use the API.
+    1) User can pass in a FIX message byte array as the first parameter and a Decoder as the second parameter.
+        The parser will decode the FIX message and populate the values into the Decoder. Or,
+    2) the User can pass in a FIX message byte array as the first parameter, and obtain a human-readable string of the FIX message.
 
-3. com.fix.util.bytes and com.fix.util.math is referenced from a side-project developed by @Tom Haoyuan Chen. The implementation is aimed at providing a solution for arithmetic calculation focusing on zero-gc and decimal-place precision.
+3. For illustrating purpose, only NewOrderSingle is included here as an example.  Parser for other types of FIX message will be following the same paradigm.
+
+4. com.fix.util.bytes and com.fix.util.math is referenced from a side-project developed by @Tom Haoyuan Chen. The implementation is aimed at providing a solution for arithmetic calculation focusing on zero-gc and decimal-place precision.
+
+Benchmarks (as shown in com.fix.parser.FixParserTest)
+
+1. Parsing the same FIX message for 1 million times:
+        /**
+         * The 99. percentile is: 1261 ns
+         * The 99.9 percentile is: 4470 ns
+         * The 99.99 percentile is: 34456 ns
+         * The 99.9999 percentile is: 308373 ns
+         */
+
+2. Parsing the same FIX message for 5 million times:
+        /**
+         * The 99. percentile is: 725 ns
+         * The 99.9 percentile is: 1465 ns
+         * The 99.99 percentile is: 35320 ns
+         * The 99.9999 percentile is: 275354 ns
+         */
+
+3. Parsing the same FIX message for 20 million times:
+        /**
+         * The 99. percentile is: 434 ns
+         * The 99.9 percentile is: 1303 ns
+         * The 99.99 percentile is: 37824 ns
+         * The 99.9999 percentile is: 136124 ns
+         */
+

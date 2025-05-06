@@ -4,6 +4,8 @@ import com.fix.decoder.NewOrderSingleDecoder;
 import com.fix.exception.InvalidTagException;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class FixParserTest {
@@ -46,6 +48,12 @@ class FixParserTest {
     }
 
     @Test
+    /**
+     * The 99.00000 percentile is: 1261 ns
+     * The 99.90000 percentile is: 4470 ns
+     * The 99.99000 percentile is: 34456 ns
+     * The 99.99990 percentile is: 308373 ns
+     */
     public void benchmark_the_latency_of_parsing_1_000_000_newOrderSingle() throws InvalidTagException {
         long[] timeElapsed = new long[1_000_000];
         for (int i = 0; i < 1_000_000; i++) {
@@ -54,9 +62,22 @@ class FixParserTest {
             long stopNs = System.nanoTime();
             timeElapsed[i] = stopNs - startNs;
         }
+
+        Arrays.sort(timeElapsed);
+        double[] percentiles = {99, 99.9, 99.99, 99.9999};
+        for (double percentile : percentiles) {
+            int index = (int) Math.ceil(percentile / 100 * timeElapsed.length) - 1;
+            System.out.printf("The %.5f percentile is: %d ns%n", percentile, timeElapsed[index]);
+        }
     }
 
     @Test
+    /**
+     * The 99.00000 percentile is: 725 ns
+     * The 99.90000 percentile is: 1465 ns
+     * The 99.99000 percentile is: 35320 ns
+     * The 99.99990 percentile is: 275354 ns
+     */
     public void benchmark_the_latency_of_parsing_5_000_000_newOrderSingle() throws InvalidTagException {
         long[] timeElapsed = new long[5_000_000];
         for (int i = 0; i < 5_000_000; i++) {
@@ -65,9 +86,22 @@ class FixParserTest {
             long stopNs = System.nanoTime();
             timeElapsed[i] = stopNs - startNs;
         }
+
+        Arrays.sort(timeElapsed);
+        double[] percentiles = {99, 99.9, 99.99, 99.9999};
+        for (double percentile : percentiles) {
+            int index = (int) Math.ceil(percentile / 100 * timeElapsed.length) - 1;
+            System.out.printf("The %.5f percentile is: %d ns%n", percentile, timeElapsed[index]);
+        }
     }
 
     @Test
+    /**
+     * The 99.00000 percentile is: 434 ns
+     * The 99.90000 percentile is: 1303 ns
+     * The 99.99000 percentile is: 37824 ns
+     * The 99.99990 percentile is: 136124 ns
+     */
     public void benchmark_the_latency_of_parsing_20_000_000_newOrderSingle() throws InvalidTagException {
         long[] timeElapsed = new long[20_000_000];
         for (int i = 0; i < 20_000_000; i++) {
@@ -75,6 +109,34 @@ class FixParserTest {
             fixParser.parseNewOrderSingle(ORIGNAL_FIX_MESSAGE_BYTES, decoder);
             long stopNs = System.nanoTime();
             timeElapsed[i] = stopNs - startNs;
+        }
+
+        Arrays.sort(timeElapsed);
+        double[] percentiles = {99, 99.9, 99.99, 99.9999};
+        for (double percentile : percentiles) {
+            int index = (int) Math.ceil(percentile / 100 * timeElapsed.length) - 1;
+            System.out.printf("The %.5f percentile is: %d ns%n", percentile, timeElapsed[index]);
+        }
+    }
+
+    @Test
+    public void benchmark_the_memory_allocation_of_parsing_1_000_000_newOrderSingle() throws InvalidTagException {
+        for (int i = 0; i < 1_000_000; i++) {
+            fixParser.parseNewOrderSingle(ORIGNAL_FIX_MESSAGE_BYTES, decoder);
+        }
+    }
+
+    @Test
+    public void benchmark_the_memory_allocation_of_parsing_5_000_000_newOrderSingle() throws InvalidTagException {
+        for (int i = 0; i < 5_000_000; i++) {
+            fixParser.parseNewOrderSingle(ORIGNAL_FIX_MESSAGE_BYTES, decoder);
+        }
+    }
+
+    @Test
+    public void benchmark_the_memory_allocation_of_parsing_20_000_000_newOrderSingle() throws InvalidTagException {
+        for (int i = 0; i < 20_000_000; i++) {
+            fixParser.parseNewOrderSingle(ORIGNAL_FIX_MESSAGE_BYTES, decoder);
         }
     }
 
