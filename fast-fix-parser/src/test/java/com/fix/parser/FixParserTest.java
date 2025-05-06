@@ -39,6 +39,13 @@ class FixParserTest {
     }
 
     @Test
+    public void can_parse_a_newOrderSingle_and_print_as_string() throws InvalidTagException {
+        String newOrderSingleString = fixParser.parseNewOrderSingle(ORIGNAL_FIX_MESSAGE_BYTES);
+        assertNotNull(newOrderSingleString);
+        System.out.println(newOrderSingleString);
+    }
+
+    @Test
     public void benchmark_the_latency_of_parsing_1_000_000_newOrderSingle() throws InvalidTagException {
         long[] timeElapsed = new long[1_000_000];
         for (int i = 0; i < 1_000_000; i++) {
@@ -61,7 +68,7 @@ class FixParserTest {
     }
 
     @Test
-    public void benchmark_the_latency_of_parsing_10000000_newOrderSingle() throws InvalidTagException {
+    public void benchmark_the_latency_of_parsing_10_000_000_newOrderSingle() throws InvalidTagException {
         long[] timeElapsed = new long[10_000_000];
         for (int i = 0; i < 10_000_000; i++) {
             long startNs = System.nanoTime();
